@@ -26,7 +26,7 @@ export const ProductsAPIActions = createActionGroup({
     'Get Product Success': props<{ product: Product }>(),
     'Get Product Fail': props<{ message: string }>(),
     // Cancellazione
-    'Delete Product Success': props<{ product: Product }>(),
+    'Delete Product Success': props<{ id: number }>(),
     'Delete Product Fail': props<{ message: string }>(),
     // Aggiornamento
     'Update Product Success': props<{ product: Product }>(),

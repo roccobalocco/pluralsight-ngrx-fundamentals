@@ -23,11 +23,6 @@ export class ProductsPageComponent {
   errorMessage$ = this.store.select(selectProductsErrorMessage);
 
   constructor(private store: Store) {
-    this.store.subscribe((store) => console.log(store));
-  }
-
-  ngOnInit() {
-    this.store.dispatch(ProductsPageActions.loadProducts());
   }
 
   toggleShowProductCode() {

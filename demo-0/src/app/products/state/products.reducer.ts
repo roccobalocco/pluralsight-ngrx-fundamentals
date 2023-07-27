@@ -41,37 +41,50 @@ export const productsReducer = createReducer(
   on(ProductsPageActions.addProduct, (state) => ({
     ...state,
     errorMessage: '',
+    loading: true
   })),
   on(ProductsAPIActions.addProductSuccess, (state, { product }) => ({
     ...state,
     loading: false,
+    products: [...state.products, product]
   })),
   on(ProductsAPIActions.addProductFail, (state, { message }) => ({
     ...state,
+    loading: false,
     errorMessage: message,
   })),
   on(ProductsPageActions.updateProduct, (state) => ({
     ...state,
+    loading: true,
     errorMessage: '',
   })),
   on(ProductsAPIActions.updateProductSuccess, (state, { product }) => ({
     ...state,
     loading: false,
+    products: state.products.map((existingProduct) =>
+      existingProduct.id === product.id ? product : existingProduct
+    ),
   })),
   on(ProductsAPIActions.updateProductFail, (state, { message }) => ({
     ...state,
+    loading: false,
     errorMessage: message,
   })),
   on(ProductsPageActions.deleteProduct, (state) => ({
     ...state,
+    loading: true,
     errorMessage: '',
   })),
-  on(ProductsAPIActions.deleteProductSuccess, (state, { product }) => ({
+  on(ProductsAPIActions.deleteProductSuccess, (state, { id }) => ({
     ...state,
     loading: false,
+    products: state.products.filter(
+      (existingProduct) => existingProduct.id !== id
+    ),
   })),
   on(ProductsAPIActions.deleteProductFail, (state, { message }) => ({
     ...state,
+    loading: false,
     errorMessage: message,
   })),
   on(ProductsPageActions.getProduct, (state) => ({
