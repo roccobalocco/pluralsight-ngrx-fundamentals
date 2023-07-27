@@ -18,7 +18,9 @@ export class ProductsPageComponent {
   );
   errorMessage = '';
 
-  constructor(private productsService: ProductsService, private store: Store) {}
+  constructor(private productsService: ProductsService, private store: Store) {
+    this.store.subscribe((store) => console.log(store))
+  }
 
   ngOnInit() {
     this.getProducts();

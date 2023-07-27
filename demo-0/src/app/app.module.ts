@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 import { InMemoryDataService } from './in-memory-data.service';
 import { HomeComponent } from './home/home.component';
 
+import { StoreModule } from '@ngrx/store'
+import { productsReducer } from './products/state/products.reducer';
+
 @NgModule({
   declarations: [AppComponent, HomeComponent],
   imports: [
@@ -15,6 +18,7 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
+    StoreModule.forRoot(productsReducer),
   ],
   providers: [],
   bootstrap: [AppComponent],
