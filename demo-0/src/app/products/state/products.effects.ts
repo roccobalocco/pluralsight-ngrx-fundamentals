@@ -2,15 +2,20 @@ import { ProductsAPIActions } from './products.action';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { ProductsService } from '../products.service';
-import { catchError, concatMap, exhaustMap, map, mergeMap, of } from 'rxjs';
+import { catchError, exhaustMap, map, mergeMap, of, tap } from 'rxjs';
 import { ProductsPageActions } from './products.action';
-import { Product } from '../product.model';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ProductEffects {
+  ngrxOnInitEffects() {
+    return ProductsPageActions.loadProducts();
+  }
+
   constructor(
     private actions$: Actions,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private router: Router
   ) {}
 
   loadProducts$ = createEffect(() =>
@@ -38,7 +43,7 @@ export class ProductEffects {
           { product } // permette di completare questa operazione, uccidendo tutte quelle che arrivano prima del suo completamento
         ) =>
           this.productService.add(product).pipe(
-            map((product) => ProductsAPIActions.addProductSuccess({ product })),
+            map((newProduct) => ProductsAPIActions.addProductSuccess({ product: newProduct })),
             catchError((err) =>
               of(ProductsAPIActions.addProductFail({ message: err }))
             )
@@ -49,13 +54,13 @@ export class ProductEffects {
 
   updateProduct$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductsPageActions.addProduct),
+      ofType(ProductsPageActions.updateProduct),
       mergeMap(
         (
           { product } // permette di completare questa operazione, uccidendo tutte quelle che arrivano prima del suo completamento
         ) =>
           this.productService.update(product).pipe(
-            map((product) =>
+            map(() =>
               ProductsAPIActions.updateProductSuccess({ product })
             ),
             catchError((err) =>
@@ -74,8 +79,8 @@ export class ProductEffects {
           { id } // permette di completare questa operazione, uccidendo tutte quelle che arrivano prima del suo completamento
         ) =>
           this.productService.delete(id).pipe(
-            map((product: any) =>
-              ProductsAPIActions.deleteProductSuccess({ product })
+            map(() =>
+              ProductsAPIActions.deleteProductSuccess({ id })
             ),
             catchError((err) =>
               of(ProductsAPIActions.deleteProductFail({ message: err }))
@@ -100,5 +105,19 @@ export class ProductEffects {
           )
       )
     )
+  );
+
+  rediretToProductspage = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(
+          //si registrano le azioni che voglio ascoltare
+          ProductsAPIActions.addProductSuccess,
+          ProductsAPIActions.updateProductSuccess,
+          ProductsAPIActions.deleteProductSuccess
+        ),
+        tap(() => this.router.navigate(['/products'])) //se una di quelle viene scatenata allora io mi tolgo dalla pagina
+      ),
+    { dispatch: false } // non voglio che questa azione venga registrata!
   );
 }
