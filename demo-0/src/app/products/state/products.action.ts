@@ -1,35 +1,35 @@
-import { createActionGroup, emptyProps, props } from "@ngrx/store";
-import { Product } from "../product.model";
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { Product } from '../product.model';
 
 export const ProductsPageActions = createActionGroup({
   source: 'Products Page',
   events: {
     'Toggle Show Product Code': emptyProps(),
     'Load Products': emptyProps(),
-    'Add Product': props<{ product: Product}>(),
-    'Get Product': props<{ id: string}>(),
-    'Delete Product': props<{ id: string }>(),
+    'Add Product': props<{ product: Product }>(),
+    'Get Product': props<{ id: number }>(),
+    'Delete Product': props<{ id: number }>(),
     'Update Product': props<{ product: Product }>(),
-  }
-})
+  },
+});
 
 export const ProductsAPIActions = createActionGroup({
   source: 'Products API',
   events: {
     // Caricamento
-    'Products Loaded Success': props<{ products: Product[]}>(),
+    'Products Loaded Success': props<{ products: Product[] }>(),
     'Products Loaded Fail': props<{ message: string }>(),
     // Aggiunta
-    'Add Product Success': props<{ products: Product}>(),
+    'Add Product Success': props<{ product: Product }>(),
     'Add Product Fail': props<{ message: string }>(),
     // Ricerca
-    'Get Product Success': props<{ products: Product}>(),
+    'Get Product Success': props<{ product: Product }>(),
     'Get Product Fail': props<{ message: string }>(),
     // Cancellazione
-    'Delete Product Success': props<{ products: Product}>(),
+    'Delete Product Success': props<{ product: Product }>(),
     'Delete Product Fail': props<{ message: string }>(),
     // Aggiornamento
-    'Update Product Success': props<{ products: Product}>(),
+    'Update Product Success': props<{ product: Product }>(),
     'Update Product Fail': props<{ message: string }>(),
-  }
-})
+  },
+});

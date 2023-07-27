@@ -9,16 +9,15 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { HomeComponent } from './home/home.component';
 
 // store principale con funzione pure per comunicarvi
-import { StoreModule } from '@ngrx/store'
+import { StoreModule } from '@ngrx/store';
 import { productsReducer } from './products/state/products.reducer';
 
 // devtools importanti in debug mode
-import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { environment } from 'src/environments/environment'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 // side effect in ngrx
 import { EffectsModule } from '@ngrx/effects';
-
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -31,9 +30,9 @@ import { EffectsModule } from '@ngrx/effects';
     StoreDevtoolsModule.instrument({
       name: 'NgRx Demo App',
       maxAge: 25,
-      logOnly: environment.production
+      logOnly: environment.production,
     }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent],
