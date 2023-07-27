@@ -3,6 +3,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ProductsState } from './products.reducer';
 import { sumProducts } from 'src/app/utils/sum-products';
+import { getRouterSelectors } from '@ngrx/router-store';
 
 // il papá di tutti i selettori sotto
 export const selectProductsState =
@@ -32,4 +33,13 @@ export const selectProductsErrorMessage = createSelector(
   selectProductsState,
   (productsState) => productsState.errorMessage //per inferenza di nome ?
 );
+
+export const { selectRouteParams } = getRouterSelectors()
+
+export const selectProductById = createSelector(
+  selectProducts,
+  selectRouteParams,
+  (products, { id }) => products.find(product => product.id == id)
+)
+
 // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- //

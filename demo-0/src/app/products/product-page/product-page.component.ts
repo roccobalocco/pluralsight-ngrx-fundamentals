@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { Product } from '../product.model';
 import { Store } from '@ngrx/store';
 import { ProductsPageActions } from '../state/products.action';
+import { selectProductById } from '../state/products.selectors';
 
 @Component({
   selector: 'app-product-page',
@@ -11,22 +11,12 @@ import { ProductsPageActions } from '../state/products.action';
   styleUrls: ['./product-page.component.css'],
 })
 export class ProductPageComponent {
-  product$: Observable<Product> | undefined;
+  product$ = this.store.select(selectProductById)
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private store: Store
   ) {}
-
-  ngOnInit() {
-    const productId = parseInt(this.activatedRoute.snapshot.params['id']);
-    this.getProduct(productId);
-  }
-
-  getProduct(id: number) {
-    this.store.dispatch(ProductsPageActions.getProduct({ id }));
-  }
 
   addProduct(product: Product) {
     this.store.dispatch(ProductsPageActions.addProduct({ product }));
