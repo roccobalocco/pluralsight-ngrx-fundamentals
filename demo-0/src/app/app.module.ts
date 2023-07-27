@@ -8,8 +8,13 @@ import { AppComponent } from './app.component';
 import { InMemoryDataService } from './in-memory-data.service';
 import { HomeComponent } from './home/home.component';
 
+// store principale con funzione pure per comunicarvi
 import { StoreModule } from '@ngrx/store'
 import { productsReducer } from './products/state/products.reducer';
+
+// devtools importanti in debug mode
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { environment } from 'src/environments/environment'
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -19,6 +24,11 @@ import { productsReducer } from './products/state/products.reducer';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService),
     StoreModule.forRoot(productsReducer),
+    StoreDevtoolsModule.instrument({
+      name: 'NgRx Demo App',
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],
