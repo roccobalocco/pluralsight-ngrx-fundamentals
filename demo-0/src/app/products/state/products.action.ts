@@ -16,19 +16,19 @@ export const ProductsPageActions = createActionGroup({
 export const ProductsAPIActions = createActionGroup({
   source: 'Products API',
   events: {
-    //caricamento
+    // Caricamento
     'Products Loaded Success': props<{ products: Product[]}>(),
     'Products Loaded Fail': props<{ message: string }>(),
-    //aggiunta
+    // Aggiunta
     'Add Product Success': props<{ products: Product}>(),
     'Add Product Fail': props<{ message: string }>(),
-    //ricerca
+    // Ricerca
     'Get Product Success': props<{ products: Product}>(),
     'Get Product Fail': props<{ message: string }>(),
-    //cancellazione
+    // Cancellazione
     'Delete Product Success': props<{ products: Product}>(),
     'Delete Product Fail': props<{ message: string }>(),
-    //aggiornamento
+    // Aggiornamento
     'Update Product Success': props<{ products: Product}>(),
     'Update Product Fail': props<{ message: string }>(),
   }
