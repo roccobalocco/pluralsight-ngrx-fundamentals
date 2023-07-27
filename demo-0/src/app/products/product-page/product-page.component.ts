@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { Product } from '../product.model';
 import { Store } from '@ngrx/store';
 import { ProductsPageActions } from '../state/products.action';

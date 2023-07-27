@@ -1,19 +1,22 @@
 // I nostri selettori :)
 
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ProductsState } from './products.reducer';
 import { sumProducts } from 'src/app/utils/sum-products';
 import { getRouterSelectors } from '@ngrx/router-store';
-import { Product } from '../product.model';
-import { DEFAULT_INTERPOLATION_CONFIG } from '@angular/compiler';
+import * as fromProducts from './products.reducer';
 
 // il papá di tutti i selettori sotto
 export const selectProductsState =
-  createFeatureSelector<ProductsState>('products');
+  createFeatureSelector<fromProducts.ProductsState>('products');
 
 export const selectProducts = createSelector(
   selectProductsState,
-  (productsState) => productsState.products
+  fromProducts.selectProducts
+);
+
+export const selectProductsEntities = createSelector(
+  selectProductsState,
+  fromProducts.selectProductEntities
 );
 
 export const selectProductsLoading = createSelector(
@@ -39,10 +42,9 @@ export const selectProductsErrorMessage = createSelector(
 export const { selectRouteParams } = getRouterSelectors()
 
 export const selectProductById = createSelector(
-  selectProducts,
+  selectProductsEntities,
   selectRouteParams,
-  (products, { id }) =>
-    products.find(product => product.id == id)
+  (products, { id }) => products[id]
 )
 
 // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- //

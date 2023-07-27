@@ -61,7 +61,7 @@ export class ProductEffects {
         ) =>
           this.productService.update(product).pipe(
             map(() =>
-              ProductsAPIActions.updateProductSuccess({ product })
+              ProductsAPIActions.updateProductSuccess({ product: { id: product.id, changes: product} })
             ),
             catchError((err) =>
               of(ProductsAPIActions.updateProductFail({ message: err }))
