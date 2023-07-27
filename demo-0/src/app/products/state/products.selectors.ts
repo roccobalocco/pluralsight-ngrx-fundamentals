@@ -27,5 +27,9 @@ export const selectProductsTotal = createSelector(
   sumProducts //per inferenza di nome ?
 )
 
+export const selectProductsErrorMessage = createSelector(
+  selectProductsState,
+  (productsState) => productsState.errorMessage //per inferenza di nome ?
+)
 // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- // -- //
 
